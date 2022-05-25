@@ -1,0 +1,111 @@
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int n = nums.size();
+//         int sum=0;
+//         // vector<int> arr;
+        
+//         int count=0;
+//         for(int i=0;i<n;i++){
+//             sum+=nums[i];
+//             if(sum%k==0){
+//                 count++;
+//             }
+//         }
+        
+//         // if(sum%k==0){
+//         //     count++;
+//         // }
+//         sum=nums[0];
+//         // if(n>1 && nums[0]%k==0){
+//         //     count++;
+//         // }
+//         for(int i=1;i<n;i++){
+//             sum+=nums[i];
+//             int tempsum=0;
+//             for(int j=0;j<i;j++){
+//                 tempsum+=nums[j];
+//                 int temp = sum - tempsum;
+//                 if(temp%k==0){
+//                    // cout<<"i :"<<nums[i]<<" j :"<<nums[j]<<" temp: "<<temp<<endl;
+//                     count++;
+//                 }
+//             }
+//         }
+        // sum=nums[n-1];
+        //   for(int i=n-2;i>0;i--){
+        //     sum+=nums[i];
+        //     int tempsum=0;
+        //     for(int j=n-1;j>i;j--){
+        //         tempsum+=nums[j];
+        //         int temp = sum - tempsum;
+        //         if(temp%k==0){
+        //           //  cout<<"i :"<<nums[i]<<" j :"<<nums[j]<<" temp: "<<temp<<endl;
+        //             count++;
+        //         }
+        //     }
+        // }
+        // for(int i=0;i<n;i++){
+        //     int sum=0;
+        //     for(int j=i;j<n;j++){
+        //         sum+=nums[j];
+        //         if(sum%k==0){
+        //             count++;
+        //         }
+        //     }
+        // }
+        
+        
+        
+        
+        
+        
+        
+        
+        //basic fact behind this implementation is that if same remainder repeats, it means if we subtract the two subarrays, we can get a subaaray withr emainder zero.
+        
+        
+        
+        https://www.youtube.com/watch?v=QM0klnvTQzk
+        
+        
+        
+        
+        
+        
+        
+        
+        //pay attention very nice implementation
+        
+        
+        
+        //to store number of subarraya we use count and for storing cumulative sum we store it in sum variable.
+        
+                int count=0,sum=0;
+        //map to store remainder and its count
+        unordered_map<int,int> m;
+         initially cumulative sum is zero so the count of zero becomes 1.
+        m[0]=1;
+        //trAVERSE the array 
+        for(int i=0;i<n;i++){
+        //keep adding each sum value and store it in sum.
+            sum+=nums[i];
+            //temp wil store our remainder 
+            int temp = sum%k;
+            //if remainder is less than 0 add k because remainder is always between 0 and k-1.
+            if(temp<0){
+                temp+=k;
+            }
+            //if remainder is found in hash map, add the count of the remainder to count variable beacuse thats the number of possible subarrays. 
+            if(m.find(temp)!= m.end()){
+                count+=m[temp];
+                //cout<<"sum : "<<sum<<" count : "<<count<<" i: "<<i<<endl;
+            }
+            
+            //keep adding count of each remainder.
+            m[temp]++;
+        }
+        
+        return count;
+    }
+};
