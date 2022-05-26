@@ -1,0 +1,66 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int indx =0, n = nums.size(),sum=0,count=0 ;
+//         for(int i=0;indx<n;i++){
+//                         sum+=nums[i];
+
+//             //cout<<"initial value :"<<nums[indx]<<endl;
+//           // cout<<"sum :"<<sum<<endl;
+//             // if(sum>k){
+//             //     sum=0;
+//             //     i = indx;
+//             //     indx++;
+//             // }
+//             if (sum==k){
+//                 count++;
+//                 //cout<<"count incremeneted"<<endl;
+//                            //cout<<"sum :"<<sum<<endl;
+
+//             }
+//              if(i==n-1){
+//                 indx++;
+//                 i=indx-1;
+//                  sum=0;
+//             }
+//         }
+        
+        // for(int i=0;i<n ;i++){
+        //     int sum=nums[i];
+        //     if(sum==k){
+        //         count++;
+        //     }
+        //     if(i==n-1){
+        //         continue;
+        //     }
+        //     for(int j=i+1;j<n;j++){
+        //         sum+=nums[j];
+        //         //cout<<i<<" "<<j<<endl;
+        //         if(sum==k){
+        //             count++;
+        //             //cout<<"count incremeneted"<<endl;
+        //         }
+        //     }
+        // }
+        
+        //use unordered map to store the value of sum and their counts, for each time same value of sum is observed, simply subtract the previous sum value to get a new subarray 
+        //with some equal to k. simply put, in each iteration we need to find a number sum-k in the hashmap, if we can find one, we can get count number of subarrays.
+        unordered_map<int,int> hmap;
+        //initially sum =0, thus count 1, and while taking sum, in case k==sum, diff ==0.
+        hmap[0]=1;
+        for(int i=0;i<n;i++){
+            sum+=nums[i];
+          
+            int diff = sum-k ;
+            
+            
+        if(hmap.find(diff)!=hmap.end()){
+          
+            count+=hmap[diff];
+            
+        }
+            hmap[sum]++;
+        }
+        return count;
+    }
+};
