@@ -17,7 +17,7 @@ public:
         
         
         //optimised solution
-        
+        //O(Nln(N))
         //maintain a priority queue for each value to the left side of our present iterated value
         // the priority queue will contain a pair of int,
         // one value is yi-xi which needs to be added into our present iterated value,
