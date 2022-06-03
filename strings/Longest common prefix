@@ -1,0 +1,56 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        //store first string in out ans
+        string s = strs[0];
+        // Iterate over all other values one by one
+        for(int i=1;i<strs.size();i++){
+//             if at any time any string is zero, simply return ""
+            if(strs[i].size()==0 || s.size()==0){
+                return "";
+            }
+            //if the first element of both the prefix maintaining string and iterated 
+            //string is same, create a new temp string which will contain values
+            //which are matching with the prefix string
+            if(s[0]==strs[i][0]){
+                string temp  ;
+                //first element of the prefix string is added 
+                //as it is equal
+                temp +=s[0] ;
+                int j;
+                
+                //keep checking for all other values using a forloop if they belong 
+                //to the prefix string
+                for( j=1;j<strs[i].size();j++){
+                    if(s[j]==strs[i][j]){
+                        //add if present in the temp string
+                        temp+=s[j];
+                        continue;
+                    }
+                    else{
+                        //in case there is a char which is not same as 
+                        // in prefix string
+                        //update the prefix string to the temp string 
+                        //and come out of the loop
+                        s=temp;
+                        break;
+                    }
+                }
+                //in case our string is completely included in the prefix string,
+                //we will iterate it and come out of the loop with our complete string in
+                //temp string
+                //so just update this completely included string value into the prefix string
+                if(j==temp.size()){
+                    s = temp;
+                }
+            }
+            //in case first element itself is not same
+            //come out of the loop
+            //and return empty string
+            else{
+                return "";
+            }
+        }
+        return s;
+    }
+};
