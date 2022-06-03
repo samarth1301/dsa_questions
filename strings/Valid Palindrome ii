@@ -1,0 +1,64 @@
+class Solution {
+public:
+    //helper function to check if a string is palindrom or not
+    bool checkPalindrome(string s, int st, int end){
+        int i = st, j  =end;
+        while(i<=j){
+            if(s[i]==s[j]){
+                i++;
+                j--;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+    //main function
+    bool validPalindrome(string s) {
+        //flag to skip a number only once
+        int flag = 1,n=s.size();
+       int i=0 , j =n-1;
+        //loop for iterating in the array from the two sides
+        //two pointer approach
+        while(i<=j){
+            //keep iterating as long as elements are same
+            if(s[i]==s[j]){
+               
+                i++;
+                j--;
+            }
+            //in case diff elements are met and flag is 1
+            else if(s[i]!=s[j] && flag){
+                flag =0;
+               //convert flag into 0
+                //as you can skip just one char
+                
+                //now we need to decide which char to skip from the two
+                //unequal char
+                
+                
+                //if we skip the first element 
+                //we need to check if the left out string is palindrom
+                //if yes skip the char and continue the iteration
+                
+                 if (checkPalindrome(s,i+1,j)){
+                    i++;
+                }
+                //if even after skipping first element, the remaining string is not 
+                //palindrom, we will skip the second char
+                
+                 else {
+                    j--;
+                }
+                
+            }
+            //in case the two char are unequal and we already skipped a char
+            //simply return false
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+};
