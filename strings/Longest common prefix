@@ -1,5 +1,12 @@
 class Solution {
 public:
+ //horizontal passing
+    //we can do vertical passing too
+    //first forloop for the elements of first string and 
+    //second forloop for all the other strings to check for matching characters
+    //in case any character is not same, or whole string is included in 
+    // prefix string
+    //update the prefix string 
     string longestCommonPrefix(vector<string>& strs) {
         //store first string in out ans
         string s = strs[0];
