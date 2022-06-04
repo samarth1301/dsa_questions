@@ -1,0 +1,64 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        //this approach was done by me in my second approach
+        //i am very happy
+        //:D
+        
+        //2d matrix which will carry our result
+        vector<vector<string>> res;
+        //hash map which will carry key as a sorted string
+        //and value as an array which will carry 
+        // all the actual string values.
+        unordered_map <string,vector<string>> hmap;
+        //iterate through the string
+        for(auto s : strs){
+            //store actual value in temp variable
+            string temp = s;
+            //sort the string
+            sort(s.begin(),s.end());
+            //use key as the sorted string and add in the respective array
+            //the actual value of the string
+            hmap[s].push_back(temp);
+        }
+        
+        //iterator to iterate through my hmap        
+        auto itr = hmap.begin();
+        
+        //take each array in the hash map and add it into the 2d array.
+        
+        while(itr != hmap.end()){
+            res.push_back(itr->second);
+            itr++;
+        }
+        
+        // //int n = strs.size();
+        // int i=0;
+        // while(0<strs.size()){
+        //     unordered_set <char> temp;
+        //     vector<string> arr;
+        //     for(auto c : strs[i]){
+        //         temp.insert(c);
+        //     }
+        //    // cout<<strs[i]<<endl;
+        //     for(int j=i;j<strs.size();j++){
+        //         int count =0;
+        //         for(auto c: strs[j]){
+        //             if(temp.find(c)!=temp.end()){
+        //                 count++;
+        //             }
+        //         }
+        //         if(count == strs[i].size()){
+        //       //      cout<<"found same :"<<strs[j]<<endl;
+        //             arr.push_back(strs[j]);
+        //            strs.erase(strs.begin()+j);
+        //             j--;
+        //         }
+        //     }
+        //     res.push_back(arr);
+        // }
+        
+        //return the 2-d array
+        return res;
+    }
+};
