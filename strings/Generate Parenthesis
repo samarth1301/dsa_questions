@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<string> res;
+    vector<string> generateParenthesis(int n) {
+        
+        // brute force can be generating all possible combinations
+        //and check for valid strings
+        // a more optimal solution is mentioned here
+        // call generate function with empty string
+        //left right are the number of left right parenthesis you can use
+        generate("", n, n);
+        //res contains answer 
+        return res;
+    }
+    void generate(string s,int left,int right){
+        //string is your present string
+        //left is the limit of ( parenthesis 
+        //right is the limit of ) parenthesis
+        
+        
+        //base condition , if botht the limits are zero
+        //push the string into array and return.
+       if(left==0 && right ==0 ){
+            res.push_back(s);
+           return;
+       }
+        
+        //if we have even one more space for ( parenthesis 
+        //lets add it and call the function again 
+        //also reduce the number of left limit
+        if(left>0){
+            //update the string
+            //add one more (.
+            generate(s+'(',left-1,right);
+        }
+        //in case of ), we can add it only when we already have 
+        //one ( in our string 
+        //thus left should always be less the right 
+        //if we need to add it to the string
+        if(right>left){
+            //reduce right and add ) to string
+            generate(s+')',left,right-1);
+        }
+        
+    }
+    
+    
+};
