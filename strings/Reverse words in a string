@@ -1,0 +1,62 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        //stack for storing each word
+       stack<string> st;
+        //temp string which will store each word temporarily
+        string temp="";
+       
+        for(int i=0;i<s.size();i++){
+           
+            //in case space found
+            
+            if(s[i]==' '){
+                //if string has no elements
+                //come out of the loop as it means this is a trailing space
+                //this is basically condition for trailing spaces
+                //also if there is trailing space between words, temp 
+                //string will still be zero, thus not adding the value into 
+                //our stack
+                if(temp.size()==0){
+                    continue;
+                }
+                
+                //else simply add the word into the stack
+                st.push(temp);
+                //reset temp string to empty string
+                temp="";
+                continue;
+            }
+            
+            //if no space found
+            //add the char to temp string
+            temp+=s[i];
+           
+        }
+        
+        //this is for the same logic but for or after the last word
+        //as there is no space after the last word in 
+        //an ideal case
+        // so if our string is not empty
+        //add the last value into the stack
+        if(temp.size()!=0){
+            st.push(temp);            
+        }
+        //reset again
+        temp = "";
+        
+        //pop out all the elements out of the stack and add it into the string
+        while(!st.empty()){
+          //no space after last word
+            if(st.size()==1){
+                temp+=st.top();
+                st.pop();
+                break;
+            }
+            //space after each word
+            temp+=st.top() + " ";
+            st.pop();
+        }
+        return temp;
+    }
+};
