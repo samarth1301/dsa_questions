@@ -1,0 +1,65 @@
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n = haystack.length(), m= needle.length();
+        //O(N*M)
+        // for(int i=0;i<=n-m;i++){
+        //     if(haystack[i]==needle[0]){
+        //         int count =1;
+        //         for(int j=1;j<m;j++){
+        //             if(haystack[i+j]==needle[j]){
+        //                 count++;
+        //             }
+        //             else{
+        //                 break;
+        //             }
+        //         }
+        //         if(count==m){
+        //             return i;
+        //         }
+        //     }
+        // }
+        
+        
+       //KMP
+
+        //O(M+N)
+        int res=-1;
+        vector <int> prefix = findPrefix (needle);
+        int i=0,j=0;
+        while(i<n){
+            if(haystack[i]==needle[j]){
+                i++;
+                j++;
+            }
+            else{
+                if(j>0){
+                    j = prefix[j-1];
+                }
+                else{
+                    i++;
+                }
+            }
+            if(j==m){
+                res = i-m;
+                break;
+            }
+        }
+        
+        return res;
+    }
+    
+    vector<int> findPrefix(string s){
+        int n = s.size();
+        vector<int> res(n,0);
+        for(int i=1;i<n;i++){
+            int j = res[i-1];
+            while(j>0 && res[i]!=res[j]) j = res[j-1];
+            if(res[i]==res[j])
+                j++;
+            res[i]= j;
+        }
+        
+        return res;
+    }
+};
