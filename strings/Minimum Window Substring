@@ -1,0 +1,82 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        //if t is greater than s
+        // return empty
+        if(s.size()<t.size()){
+            return "";
+        }
+        
+        //else maintain two hash map
+        // one for t string 
+        // one for s string
+        
+        unordered_map <char,int> hmap_str;
+        unordered_map <char,int> hmap_pat;
+        
+        
+        //iterate in t string and store the frequecy of each variable
+        //here the order is not important
+        // so we will solve this question with respect to the frequency of characters
+        
+        for(auto c : t){
+            hmap_pat[c]++;
+        }
+        
+        
+        //start index will carry the starting of the subarray being traversed
+        //min_indx will carry the start index of minimum subarray containing
+        //all chars of t
+        //min_size is the size of minimum subarray contianing all characters of t
+        
+        int start=0, min_indx =-1 , min_size = INT_MAX;
+        //count variable to count the number of matched characters
+        int c=0;
+        
+        //loop to traverse in s string
+        for(int i=0;i<s.size();i++){
+            //add frequency of each character in s hmap
+            hmap_str[s[i]]++;
+            //if frequency in s hmap is less than or equal to 
+            //frequency in pattern hmap, meaning we still need more characters
+            //to include.
+            // add count for that character
+            if(hmap_str[s[i]]<=hmap_pat[s[i]]) c++;
+            //if count == size of pattern string
+            //that means we found at least one substring with all characters
+            if(c==t.size()){
+                //while starting indexof s string has more characters in the 
+                //substring than needed, remove the element (just skip the first character 
+                //and move to the next character)
+                //if starting index has some character which does not exist in 
+                //t string than also u can move the staring index to the next element
+                while(hmap_str[s[start]]>hmap_pat[s[start]] || hmap_pat[s[start]]==0){
+                    
+                    if(hmap_str[s[start]]> hmap_pat[s[start]]){
+                        hmap_str[s[start]]--;
+                    }
+                    
+                    start++;
+                }
+                
+                //update min_indx and min_size in case a new value is found
+                //i is iterating index
+                //start is index from which ur subarray starts
+                int temp = i-start+1;
+                if(min_size>temp){
+                    min_size = temp;
+                    min_indx = start;
+                }
+                
+            }
+            
+        }
+        //in case no substring found
+        if(min_indx==-1){
+            return "";
+        }
+        
+       // return substring starting with min_indx to a size of min_size
+        return s.substr(min_indx,min_size);
+    }
+};
