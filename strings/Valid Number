@@ -1,0 +1,94 @@
+class Solution {
+public:
+    //my approach
+    //here we will just check if each character is correct or not
+    // in case forloop ends we return true
+    //in case no correct condition matches, return false
+    
+    //helper function to decide if a given character is in the range 0-9.
+    bool isDecimal(char c){
+          if(c=='0' ||c=='1' ||c=='2' ||c=='3' ||c=='4' ||c=='5' ||c=='6'||c=='7' ||c=='8' ||c=='9' ){
+                return true;
+            }
+        return false;
+    }
+    bool isNumber(string s) {
+        
+        //flag variable to check for the first occurence of dot and e.
+        int flagPoint = 1,flagE=1;
+        for(int i=0;i<s.size();i++){
+            
+            //first character is sign and there is not only one character(this sign)
+            //in the string
+            if(i==0 && i!=s.size()-1 && (s[i]=='+' || s[i]=='-')){
+                continue;
+            }
+            //the character is number
+            
+            if(isDecimal(s[i])){
+                continue;
+            }
+            
+            // character is . and there is only one character in the string
+             if(i==s.size()-1 && flagPoint && s[i]=='.' && i==0){
+               return false;
+            }
+            //character is . and at the last index
+            //and the previous element is a number
+            //flgapoint is turned 0 as another . is not counted
+            if(i==s.size()-1 && flagPoint && s[i]=='.' && i>0 && isDecimal(s[i-1]) ){
+                flagPoint=0;
+                continue;
+            }
+            
+            //character is . at the last index  and previous element is not a number
+            
+              if(i==s.size()-1 && flagPoint && s[i]=='.' && i>0 && !isDecimal(s[i-1]) ){
+                return false;
+            }
+            
+//             else char is a dot just continue as long as its first
+            
+            if(s[i]=='.' && flagPoint){
+                flagPoint=0;
+                continue;
+            }
+         
+            //if char is e or E, and this is its first occurence and prev number is a 
+            //decimal or . such that . is not the first element in the string
+            //and i is not the last element so that after e we have either a number or 
+            //a sign
+            if((s[i]=='e' || s[i]=='E') && flagE && (i>0 && (isDecimal(s[i-1]) ||
+                                                             (s[i-1]=='.' && i-1>0))) && (i<s.size()-1 && (isDecimal(s[i+1]) || s[i+1]=='+' || s[i+1]=='-' )))
+            {
+                //no point can occur after this
+                //no e can occur after this
+             
+                flagPoint=0;
+                flagE=0;
+                //in case next element is a sign
+                //element after sign should be a number
+                if(s[i+1]=='+' || s[i+1] == '-'){
+                    //just check for the condition when string is not correct
+                    // -> if there e was our second last element and sign our last element
+                    // -> char after sign is not decimal
+                    if(i+2>= s.size() || !isDecimal(s[i+2])){
+                        return false;
+                    }
+                    //in case string is valid
+                    //we dont need to check for the sign so just skip two character
+                    
+                    i++;
+                }
+                continue;
+            }
+            //in case no condition meets
+            else{
+                return false;
+            }
+            
+        }
+         return true;
+    }
+   
+};
