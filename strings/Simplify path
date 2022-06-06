@@ -1,0 +1,68 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        //string to store result
+        string res;
+        int n = path.size();
+        //stack to store each directory name from left to right
+        stack <string> s;
+        for(int i=0;i<n;i++){
+            //skip all slash
+            if(path[i]=='/'){
+                continue;
+            }
+            //move ahead until next / is found and maintain the string name 
+            string temp;
+            while(i<n && path[i]!='/')
+            {
+                temp+=path[i];
+                //we will increment i only, 
+                //as if we are traversing throgh the array
+                //because we dont need to come back to i again
+                i++;
+            }
+            //after while loop 
+            //i will be at the last element
+            //or at a /.
+            
+            //if string between / is .
+            //just move to the next element
+            if(temp=="."){
+                continue;
+            }
+            
+            //if string is ..
+            //it means we need to come out of one directory
+            //so pop out from the stack only if stack is not empty
+            if(temp==".." ){
+                if(!s.empty())
+                {   
+                    s.pop();
+                    continue;
+                }           
+            }
+            //if string is neither . or .. then add it into the stack
+            else{
+                 s.push(temp);
+            }
+            
+           
+            
+        }
+        
+        //as long as stack is not empty
+        //pop out each string and put it in the string
+        // use slash to seperate each string
+        //stack has value from right to left
+        //so add in the string same way.
+        while(!s.empty()){
+            res = '/'+ s.top()+res;
+            s.pop();
+        }
+        //in case stack was empty already
+        if(res.size()==0){
+            return "/";
+        }
+        return res;
+    }
+};
