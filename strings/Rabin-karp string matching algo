@@ -1,0 +1,79 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define d 256
+
+void search(char pat[],char txt [], int q){
+    int m = strlen(pat);
+    int n = strlen(txt);
+   
+    int h = 1;//hash power
+    int ph = 0; //hash of pat
+    int ch = 0; //hash of txt
+    
+    
+    //calculating d^(m-1)
+    for(int i=0;i<m-1;i++){
+        h = (h*d)%q;
+    }
+    
+    //calculating hash for pat and first subtring in txt
+    
+    for(int i=0;i<m;i++){
+        ph=((d*pat[i])+ph)%q;
+        ch=((d*txt[i])+ch)%q;
+    }
+    //comparing each substring
+    for(int i=0;i<n-m;i++){
+        if(ph==ch){
+            //in case same hash is found
+            //check character by character
+            int c=0;
+            int j;
+            for( j = 0;j<m ; j++){
+                if(pat[j]==txt[i+j]){
+                    c++;
+                }
+                else{
+                    break;
+                }
+            }
+            if(j==m){
+                cout<<i<<endl;
+            }
+        }
+        //else update hash of txt
+        //by removing MSB and adding LSB
+        else{
+            ch = ((ch - (h*txt[i]))*d) + txt[i+m]%q;
+            if(ch<0){
+                ch+=q;
+            }
+        }
+    }
+    cout<<-1<<endl;
+    return;
+}
+
+
+int main()
+{
+    char txt[] = "GEEKS FOR GEEKS";
+    char pat[] = "GEEK";
+       
+      // A prime number
+    int q = 101;
+     
+      // Function Call
+      search(pat, txt, q);
+    return 0;
+}
