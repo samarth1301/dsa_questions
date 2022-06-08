@@ -1,0 +1,95 @@
+class Solution {
+public:
+    int calculate(string s) {
+        //using stack
+        //here we maintain a stack with values to be added
+        //if they needs to multiply or divide
+        //we do that first and then push into the stack
+//         stack<int> nums;
+        //current number
+//        int currentNumber=0, n =s.size();
+//      
+        //last character encountered
+        //char currentC = '+';
+//         for(int i=0;i<n;i++){
+        //present character
+//             char c=s[i];
+        //if digit add it to current number
+//             if(isdigit(c)){
+//                 currentNumber = (currentNumber*10)+(c-'0');
+//             }
+            //if operator or last number
+//             if(!isdigit(c) && !iswspace(c) || i==n-1){
+                //if last encountered sign was + or -
+//                 if(currentC == '+' || currentC == '-'){
+        // +number or - number
+//                     nums.push(currentC=='+'? currentNumber : -currentNumber);
+//                 }
+        //if * multiply the current number with stack top number
+//                 else if (currentC=='*'){
+//                     int a = nums.top();
+//                     nums.pop();
+//                     nums.push(currentNumber*a);
+//                 }
+         //if / divide the current number with stack top number
+//                 else if(currentC=='/'){
+//                     int a = nums.top();
+//                     nums.pop();
+//                     nums.push(a/currentNumber);
+//                 }
+                
+        //reset the current number
+        //and change the last encountered sign to present sign
+                
+//                 currentNumber=0;
+//                 currentC = c;
+                
+//             }
+            
+//         }
+        
+//         int res=0;
+        //as long as stack is not empty pop out all the values and add
+//         while(!nums.empty()){
+//             res+=nums.top();
+//             nums.pop();
+//         }
+//         return res;
+        
+        
+        
+        //without using stack
+        
+        //same approach
+        //just in place of stack we use 
+        //last number and res 
+        //last number to store the top element
+        //res for storing sum
+
+           int length = s.length();
+        if (length == 0) return 0;
+        int currentNumber = 0, lastNumber = 0, result = 0;
+        char sign = '+';
+        for (int i = 0; i < length; i++) {
+            char currentChar = s[i];
+            if (isdigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!isdigit(currentChar) && !iswspace(currentChar) || i == length - 1) {
+                if (sign == '+' || sign == '-') {
+                    result += lastNumber;
+                    lastNumber = (sign == '+') ? currentNumber : -currentNumber;
+                } else if (sign == '*') {
+                    lastNumber = lastNumber * currentNumber;
+                } else if (sign == '/') {
+                    lastNumber = lastNumber / currentNumber;
+                }
+                sign = currentChar;
+                currentNumber = 0;
+            }
+        }
+        result += lastNumber;
+        return result;  
+     
+    }
+};
