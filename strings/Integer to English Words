@@ -1,0 +1,167 @@
+class Solution {
+public:
+    string numberToWords(int num) {
+        string arrOf1 [ ] = {"One","Two","Three","Four","Five","Six","Seven","Eight","Nine"};
+        string arrOfEleven[] = {"Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
+        string arrOfTens[]=
+        {"Ten","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+        string arr[]={"Hundred","Thousand","Million","Billion"};
+        if(num==0){
+            return "Zero";
+        }
+        string s;
+        
+        if(num>=1000000000){
+            int r = num/1000000000;
+            num -= (r* 1000000000);
+            s+= arrOf1[r-1] + " Billion ";
+        }
+        if(num==0){
+            s.erase(s.size()-1,1);
+            return s;
+        }
+        if(num>=1000000){
+            
+            
+            //for hundred million
+            if(num>=100000000){
+                int r = num/100000000;
+                num -= (r*100000000);
+                s+= arrOf1[r-1]  + " Hundred ";
+            }
+           if(num==0){
+            s+="Million";
+            return s;
+        }
+            
+            //for ten millions
+             if(num>=20000000 || num == 10000000){
+                int r = num/10000000;
+                num -= (r*10000000);
+                s+= arrOfTens[r-1]  + " ";
+            }
+             if(num==0){
+            s+="Million";
+            return s;
+        }
+             if(num>10000000){
+                int r = num-10000000;
+                num-=10000000;
+                if(r>=1000000)
+                {
+                    r = r/1000000;
+                    num-= (r*1000000);
+                    s += arrOfEleven[r-1] + " ";
+                }
+               
+            }
+          
+            else if(num>=1000000){
+                int r = num/1000000;
+                 num-= (r*1000000);
+                s+= arrOf1[r-1] + " ";
+            }
+            s+= "Million ";
+            
+           
+        }
+        if(num==0){
+                        s.erase(s.size()-1,1);
+            return s;
+        }
+        if(num>=1000){
+            if(num>=100000){
+                int r = num/100000;
+                num -= (r*100000);
+                s+= arrOf1[r-1]  + " Hundred ";
+            }
+             if(num==0){
+            s+="Thousand";
+            return s;
+        }
+           
+              if(num>=20000){
+                int r = num/10000;
+                num -= (r*10000);
+                s+= arrOfTens[r-1]  + " ";
+            }
+             if(num==0){
+            s+="Thousand";
+            return s;
+        }
+            if(num >= 10000 && 11000>num){
+                s+= "Ten ";
+                num -= 10000;
+            }
+          
+            if(num>10000){
+                int r = num-10000;
+                num-=10000;
+                if(r>=1000)
+                {
+                    r = r/1000;
+                    num-= (r*1000);
+                    s += arrOfEleven[r-1] + " ";
+                }
+               
+            }
+         
+            else if(num>=1000){
+                int r = num/1000;
+                num-= r*1000;
+                s+= arrOf1[r-1] + " ";
+            }
+            s+= "Thousand ";
+        }
+        if(num==0){
+                        s.erase(s.size()-1,1);
+
+            return s;
+        }
+        if(num>=100){
+            int r = num/100;
+            num -= r*100;
+            s+= arrOf1[r-1] + " Hundred ";
+        }
+        if(num==0){
+            s.erase(s.size()-1,1);
+            return s;
+        }
+        if(num>=20 ){
+          
+            int r = num/10;
+            num -= r*10;
+           
+            s+= arrOfTens[r-1] + " ";
+        }
+        if(num==0){
+                        s.erase(s.size()-1,1);
+
+            return s;
+        }
+        if(num==10){
+            s+="Ten";
+            return s;
+        }
+        if(num==0){
+                        s.erase(s.size()-1,1);
+
+            return s;
+        }
+        if(num>10){
+            int r = num%10;
+            num -= 10;
+            s+= arrOfEleven[r-1] ;
+            return s;
+        }
+        
+        if(num!=0){
+             s+= arrOf1[num-1];
+        }
+        
+        
+        
+     return s;   
+        
+    }
+};
