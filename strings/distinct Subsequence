@@ -1,0 +1,91 @@
+
+#include <iostream>
+//tle in this method as it includes recursion
+using namespace std;
+    //find until overshoots
+    int f(int i,int j , string s, string t){
+        // if t is over return 1
+        if(j>=t.size()){
+            return 1;
+        }
+        //if S is over return 0, as t was not over
+        if(i>=s.size()){
+            return 0;
+        }
+        //if character same add the two cases,
+        //one when we include the character in subsequence
+        //one when we dont
+        if(s[i]==t[j]){
+            return f(i+1,j,s,t) + f(i+1,j+1,s,t);
+            //   not included       included
+        }
+        //if same not found, we move to the next element in s
+        return f(i+1,j,s,t);
+    }
+    
+    //finding function
+    
+    int numDistinct(string s, string t) {
+        return f(0,0,s,t);
+    }
+int main()
+{
+    string T = "ge";
+    string S = "geeksforgeeks";
+    cout << numDistinct(S, T) << endl;
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//or
+
+
+
+class Solution {
+public:
+    //using dp
+    //maintain a matrix which will use bottom up approach
+    //we will check for each string chracter
+    //if same add two cases when s character is included and one when not
+    //if not same just set the value which was already there without
+    //last character of s.
+    
+    int numDistinct(string s, string t) {
+        vector<vector<double>> dp (t.size()+1,vector<double> (s.size()+1,0));
+        //first row is 1, first column is 0.
+        //empty string is subsequence of all strings.
+        for(int i=0;i<=s.size();i++){
+            dp[0][i]=1;
+        }
+        
+        for(int i=1;i<=t.size();i++){
+            for(int j=1;j<=s.size();j++){
+                if(s[j-1]==t[i-1]){
+                    dp[i][j]= dp[i][j-1] + dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j] = dp[i][j-1];
+                }
+            }
+        }
+        return dp[t.size()][s.size()];
+      
+    }
+};
+
+
+
