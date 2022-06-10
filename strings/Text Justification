@@ -1,0 +1,56 @@
+//simply count number of words you can fit in a line with keeping in account one space after each word
+//then calculate empty space and words in that line, than you can calculate 
+//equal number of spaces that need to be added b/w each word 
+//and extra space that will be added to each word which comes first
+//then simply add this string to result but you should keep in mind case for last line
+//in case of last line, we will have just one equal space and no extra space
+//and also if string of one line(only last ) is less than maxwidth add ' ' till it becomes equal to maxWidth
+
+
+
+
+class Solution {
+public:
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        int n = words.size();
+        vector<string> res;
+        for(int i=0;i<n;){
+            int j = i+1;
+            int wordCount = words[i].size();
+            int spaceCount = 1;
+            while(j<n && wordCount + spaceCount + words[j].size() <=maxWidth){
+                wordCount += words[j].size();
+                spaceCount++;
+                j++;
+            }
+            int spaceLeft = maxWidth -wordCount;
+            int req = j - i -1;
+            int equalSpace = req == 0 ? 0 : spaceLeft/req ;
+            int extraSpace = req ==0 ? 0 : spaceLeft%req;
+            
+             if(j==n){
+                equalSpace = 1;
+                 extraSpace = 0;
+            }
+            
+            string line;
+            
+            for(int k = i;k<j;k++ ){
+                line+=words[k];
+                if(k==j-1) break;
+                for(int l=0;l<equalSpace;l++) line += ' ';
+                
+                if(extraSpace>0){
+                  line += ' ';
+                    extraSpace--;
+                } 
+            }
+            
+           while(line.size()<maxWidth) line+=' ';
+            
+            res.push_back(line);
+            i=j;
+        }
+        return res;
+    }
+};
