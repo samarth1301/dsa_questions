@@ -1,0 +1,76 @@
+// { Driver Code Starts
+//Initial Template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+//User function Template for C++
+
+class Solution {
+public:
+//dp array which will store the count for each element whne rem remaining
+//numbers are present in line
+int dp[505][2005];
+//recursion function
+    int rec(int i, int rem , vector<int>& arr, int k){
+        //if all indices were traversed, return 0;
+        if(i==arr.size()){
+            return 0;   
+        }
+        //if result already found in dp
+        //return result
+        if(dp[i][rem]!=-1){
+            return dp[i][rem];
+        }
+        //variable to carry result
+        int ans;
+        //in case value overshoots remainding value
+        //move to the next line and also calculate cost
+        //
+        if(arr[i]>rem){
+            ans= (rem+1)*(rem+1) + rec(i+1,k-arr[i]-1,arr,k);        
+            //this means arr[i] is included and in the next line we have 
+            //(k-arr[i]-1) remaining values left
+            //(k-arr[i]) are length of the word and 1 is length of space
+            
+        }
+        else{
+            //otherwise we have two choice
+            //either include the word in the line or dont
+            
+            // case when we word is in nxt line
+            int a = (rem+1)*(rem+1) + rec(i+1,k-arr[i]-1,arr,k);
+            //word included in the same line
+            int b = rec(i+1,rem-arr[i]-1,arr,k);
+            //return minimun value (cost should be minimized)
+            ans = min(a,b);
+        }
+        //return the ans but store it in the dp array too.
+        return dp[i][rem]=ans;
+            
+    }
+
+    int solveWordWrap(vector<int>nums, int k) 
+    { 
+        // Code here
+        memset(dp,-1,sizeof(dp));
+        return rec(0,k,nums,k);
+    } 
+};
+
+// { Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int n, k;
+        cin >> n;
+        vector<int>nums(n);
+        for (int i = 0; i < n; i++)cin >> nums[i];
+        cin >> k;
+        Solution obj;
+        cout << obj.solveWordWrap(nums, k) << endl;
+	}
+	return 0;
+}  // } Driver Code Ends
