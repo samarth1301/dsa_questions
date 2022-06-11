@@ -1,0 +1,64 @@
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n = haystack.length(), m= needle.length();      
+        if(m>n){
+            return -1;
+        }
+        
+        
+        //optimal solution
+        //boyer moore
+        //i liked this method
+        //hmap to store characters of pattern string and its indices
+        unordered_map<char,int> hmap;
+        
+        //store each character with its right most index
+        for(int i=0;i<m;i++){
+            hmap[needle[i]] = i;
+        }
+        
+        //pointer for main string
+        int s=0;
+        //traverse as long as you have m characters left in string
+        while(s<=n-m){
+            //anouther pointer for pattern string from the last index
+            int j = m-1;
+            //decrement j as long as characters are same in both the strings
+            //needle from last index and haystack from s+j
+            while(j>=0 && needle[j]==haystack[s+j]){
+                j--;
+            }
+            
+            //if all characters of needle are traversed
+            //return s
+            //starting index of text
+            
+            if(j<0){
+                return s;
+            }
+            
+            //otherwise go to the next iteration,
+            // this is the tricky part
+            // here we have s+j as the index in text string with unequal character
+            //now we can get the index of this character from our hmap
+            //now we need to arrange our pattern string in such a way that it coincides with 
+            // this unequal value
+            //so we simply move ahead with next iteration in a way
+            //when we add either 1 or greater value in s
+            //this greater value will have the (j-index at which the character is supposed to be)
+            //j is the index in text string with unequal value with  pattern string
+            //for example if j =3 but in pattern string 
+            //it is supposed to be at 2 
+            //so we move our next iteration to 3-2= 1 value to the right
+            
+            s+= max(1, j-hmap[haystack[s+j]]);
+            
+            
+        }
+        
+        return -1;
+        
+    }
+    
+};
