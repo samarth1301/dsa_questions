@@ -1,0 +1,25 @@
+class Solution {
+public:
+    
+    void check(int left, int right, int &c, string s){
+        //checking both sides from left and right index as long as characters are same
+        while(left>=0 && right<s.size() && s[left]==s[right]){
+            left--;
+            right++;
+            c++;
+        }
+    }
+    
+    int countSubstrings(string s) {
+//         count,
+        int c=0,n=s.size();
+        //for each character, check twice, once in both direction from the same element
+        //and once both sides from the same element and next element
+        for(int i=0;i<n;i++){
+            check(i,i,c,s);
+            check(i,i+1,c,s);
+        }
+        return c;
+    }
+
+};
