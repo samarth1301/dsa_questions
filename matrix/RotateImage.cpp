@@ -1,6 +1,13 @@
 //first attempt
 //O(m^2) 
 //100% faster
+//baisc implementation
+//take each square and move the 4 sides one by one while storing the current element in a temporary 
+//vector, until l==r or t==b
+//we move in t from l -> r
+//in r from t->b
+//in b from r->l
+//in l from b->t
 class Solution {
 public:
     void rotate(vector<vector<int>>& matrix) {
