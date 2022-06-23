@@ -47,14 +47,14 @@ vector<long long int> productExceptSelf(vector<long long int>& nums, int n) {
     
     
     
-    //////////////////////////////////method-2
-        vector<long long int> arr(n,1);
-        int temp=1;
+   //////////////////////////////////method-2
+        vector<long long int> arr(n,1ll);
+        long long int temp=1ll;
         for(int i=0;i<n;i++){
             arr[i] = temp;
             temp*=nums[i];
         } 
-        temp=1;
+        temp=1ll;
         for(int i=n-1;i>=0;i--){
             arr[i] = arr[i] * temp;
             temp = temp * nums[i];
