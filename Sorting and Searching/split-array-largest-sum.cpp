@@ -27,6 +27,8 @@ public:
             int c = helper(nums,mid);
           //in case number of subarrays is less than m, you can minimise the value of ans by lowering your high value and updating the 
           //ans to the mid value 
+            //on the other hand if number of subarray is greater than m, then it simply means that the mid value is too low,
+            //so increase the low value to mid+1. 
             if(c<=m){                
                 high = mid-1;
                 ans = mid;
